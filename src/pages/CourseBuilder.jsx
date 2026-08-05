@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { api } from '../api/client'
 import FormField from '../components/FormField'
+import ThemedPage from '../components/ThemedPage'
 
 export default function CourseBuilder() {
   const { slug } = useParams()
@@ -65,91 +66,106 @@ export default function CourseBuilder() {
     }
   }
 
-  if (error) return <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-ember">{error}</p>
-  if (!course) return <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-muted">Loading…</p>
+  if (error) {
+    return (
+      <ThemedPage variant="builder">
+        <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-ember">{error}</p>
+      </ThemedPage>
+    )
+  }
+
+  if (!course) {
+    return (
+      <ThemedPage variant="builder">
+        <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-muted">Loading…</p>
+      </ThemedPage>
+    )
+  }
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <Link to="/teach" className="text-xs font-bold uppercase tracking-wide text-rock-muted hover:text-rock-gold">
-        ← Your courses
-      </Link>
+    <ThemedPage variant="builder">
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <Link to="/teach" className="text-xs font-bold uppercase tracking-wide text-rock-muted hover:text-rock-gold">
+          ← Your courses
+        </Link>
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="font-display text-5xl">{course.title}</h1>
-          <span
-            className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
-              course.status === 'PUBLISHED' ? 'bg-rock-gold/15 text-rock-goldlight' : 'bg-white/10 text-rock-muted'
-            }`}
-          >
-            {course.status}
-          </span>
-        </div>
-        {course.status === 'DRAFT' && (
-          <button
-            onClick={handlePublish}
-            className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity"
-          >
-            Publish course
-          </button>
-        )}
-      </div>
-
-      <div className="mt-10 space-y-5">
-        {modules.map((m, i) => (
-          <ModuleEditor key={m.id} module={m} index={i} onChanged={loadCourse} onDelete={() => handleDeleteModule(m.id)} />
-        ))}
-      </div>
-
-      <form onSubmit={handleAddModule} className="mt-6 flex flex-col gap-3 sm:flex-row">
-        <input
-          value={newModuleTitle}
-          onChange={(e) => setNewModuleTitle(e.target.value)}
-          placeholder="New module title"
-          className="flex-1 rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none placeholder:text-rock-muted/50 focus:border-rock-gold"
-        />
-        <button
-          type="submit"
-          disabled={addingModule}
-          className="w-full rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10 disabled:opacity-50 sm:w-auto"
-        >
-          Add module
-        </button>
-      </form>
-
-      <div className="mt-14 border-t border-rock-border pt-8">
-        <h2 className="font-display text-3xl">Roster</h2>
-        {!roster && <p className="mt-4 text-sm text-rock-muted">Loading…</p>}
-        {roster && roster.length === 0 && <p className="mt-4 text-sm text-rock-muted">No one has enrolled yet.</p>}
-        {roster && roster.length > 0 && (
-          <div className="mt-4 overflow-x-auto">
-            <table className="min-w-[560px] w-full text-left text-sm">
-            <thead>
-              <tr className="border-b border-rock-border text-xs font-bold uppercase tracking-wide text-rock-muted">
-                <th className="py-2 font-bold">Student</th>
-                <th className="py-2 font-bold">Status</th>
-                <th className="py-2 font-bold">Progress</th>
-              </tr>
-            </thead>
-            <tbody>
-              {roster.map((r) => (
-                <tr key={r.userId} className="border-b border-white/5">
-                  <td className="py-3">
-                    <div>{r.displayName}</div>
-                    <div className="text-xs text-rock-muted">{r.email}</div>
-                  </td>
-                  <td className="py-3 text-rock-muted">{r.enrollmentStatus}</td>
-                  <td className="py-3 text-xs text-rock-goldlight">
-                    {r.completedLessons}/{r.totalLessons}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            </table>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h1 className="font-display text-5xl">{course.title}</h1>
+            <span
+              className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+                course.status === 'PUBLISHED' ? 'bg-rock-gold/15 text-rock-goldlight' : 'bg-white/10 text-rock-muted'
+              }`}
+            >
+              {course.status}
+            </span>
           </div>
-        )}
+          {course.status === 'DRAFT' && (
+            <button
+              onClick={handlePublish}
+              className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity"
+            >
+              Publish course
+            </button>
+          )}
+        </div>
+
+        <div className="mt-10 space-y-5">
+          {modules.map((m, i) => (
+            <ModuleEditor key={m.id} module={m} index={i} onChanged={loadCourse} onDelete={() => handleDeleteModule(m.id)} />
+          ))}
+        </div>
+
+        <form onSubmit={handleAddModule} className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <input
+            value={newModuleTitle}
+            onChange={(e) => setNewModuleTitle(e.target.value)}
+            placeholder="New module title"
+            className="flex-1 rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none placeholder:text-rock-muted/50 focus:border-rock-gold"
+          />
+          <button
+            type="submit"
+            disabled={addingModule}
+            className="w-full rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10 disabled:opacity-50 sm:w-auto"
+          >
+            Add module
+          </button>
+        </form>
+
+        <div className="mt-14 border-t border-rock-border pt-8">
+          <h2 className="font-display text-3xl">Roster</h2>
+          {!roster && <p className="mt-4 text-sm text-rock-muted">Loading…</p>}
+          {roster && roster.length === 0 && <p className="mt-4 text-sm text-rock-muted">No one has enrolled yet.</p>}
+          {roster && roster.length > 0 && (
+            <div className="mt-4 overflow-x-auto">
+              <table className="min-w-[560px] w-full text-left text-sm">
+              <thead>
+                <tr className="border-b border-rock-border text-xs font-bold uppercase tracking-wide text-rock-muted">
+                  <th className="py-2 font-bold">Student</th>
+                  <th className="py-2 font-bold">Status</th>
+                  <th className="py-2 font-bold">Progress</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roster.map((r) => (
+                  <tr key={r.userId} className="border-b border-white/5">
+                    <td className="py-3">
+                      <div>{r.displayName}</div>
+                      <div className="text-xs text-rock-muted">{r.email}</div>
+                    </td>
+                    <td className="py-3 text-rock-muted">{r.enrollmentStatus}</td>
+                    <td className="py-3 text-xs text-rock-goldlight">
+                      {r.completedLessons}/{r.totalLessons}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              </table>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </ThemedPage>
   )
 }
 

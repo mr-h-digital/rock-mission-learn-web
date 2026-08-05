@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import FormField from '../components/FormField'
+import ThemedPage from '../components/ThemedPage'
 
 export default function Settings() {
   const { user, updateProfile } = useAuth()
@@ -75,79 +76,81 @@ export default function Settings() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">Settings</p>
-      <h1 className="mt-2 font-display text-5xl">Your profile</h1>
-      <p className="mt-3 text-sm text-rock-muted">Keep your account details up to date.</p>
+    <ThemedPage variant="settings">
+      <div className="mx-auto max-w-3xl px-6 py-16">
+        <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">Settings</p>
+        <h1 className="mt-2 font-display text-5xl">Your profile</h1>
+        <p className="mt-3 text-sm text-rock-muted">Keep your account details up to date.</p>
 
-      <div className="mt-6 rounded-2xl border border-rock-border bg-rock-panel p-5">
-        <p className="text-xs uppercase tracking-wide text-rock-muted">Signed in as</p>
-        <p className="mt-2 text-sm text-rock-cream">{user?.displayName}</p>
-        <p className="text-sm text-rock-muted">{user?.email}</p>
-        <p className="mt-2 text-xs uppercase tracking-wide text-rock-goldlight">Role: {roleLabel}</p>
-      </div>
-
-      <form onSubmit={handleSubmit} className="mt-6 space-y-5 rounded-2xl border border-rock-border bg-rock-panel p-6">
-        <FormField
-          label="Display name"
-          value={form.displayName}
-          onChange={(v) => setForm((f) => ({ ...f, displayName: v }))}
-          autoComplete="name"
-          required
-        />
-
-        <FormField
-          label="Email"
-          type="email"
-          value={form.email}
-          onChange={(v) => setForm((f) => ({ ...f, email: v }))}
-          autoComplete="email"
-          required
-        />
-
-        <div className="pt-2">
-          <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Change password (optional)</p>
+        <div className="mt-6 rounded-2xl border border-rock-border bg-rock-panel p-5">
+          <p className="text-xs uppercase tracking-wide text-rock-muted">Signed in as</p>
+          <p className="mt-2 text-sm text-rock-cream">{user?.displayName}</p>
+          <p className="text-sm text-rock-muted">{user?.email}</p>
+          <p className="mt-2 text-xs uppercase tracking-wide text-rock-goldlight">Role: {roleLabel}</p>
         </div>
 
-        <FormField
-          label="Current password"
-          type="password"
-          value={form.currentPassword}
-          onChange={(v) => setForm((f) => ({ ...f, currentPassword: v }))}
-          autoComplete="current-password"
-          allowReveal
-        />
+        <form onSubmit={handleSubmit} className="mt-6 space-y-5 rounded-2xl border border-rock-border bg-rock-panel p-6">
+          <FormField
+            label="Display name"
+            value={form.displayName}
+            onChange={(v) => setForm((f) => ({ ...f, displayName: v }))}
+            autoComplete="name"
+            required
+          />
 
-        <FormField
-          label="New password"
-          type="password"
-          value={form.newPassword}
-          onChange={(v) => setForm((f) => ({ ...f, newPassword: v }))}
-          autoComplete="new-password"
-          hint="At least 8 chars, including upper/lowercase, number and symbol"
-          allowReveal
-        />
+          <FormField
+            label="Email"
+            type="email"
+            value={form.email}
+            onChange={(v) => setForm((f) => ({ ...f, email: v }))}
+            autoComplete="email"
+            required
+          />
 
-        <FormField
-          label="Confirm new password"
-          type="password"
-          value={form.confirmNewPassword}
-          onChange={(v) => setForm((f) => ({ ...f, confirmNewPassword: v }))}
-          autoComplete="new-password"
-          allowReveal
-        />
+          <div className="pt-2">
+            <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Change password (optional)</p>
+          </div>
 
-        {error && <p className="text-sm text-rock-ember">{error}</p>}
-        {success && <p className="text-sm text-rock-goldlight">{success}</p>}
+          <FormField
+            label="Current password"
+            type="password"
+            value={form.currentPassword}
+            onChange={(v) => setForm((f) => ({ ...f, currentPassword: v }))}
+            autoComplete="current-password"
+            allowReveal
+          />
 
-        <button
-          type="submit"
-          disabled={submitting}
-          className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
-        >
-          {submitting ? 'Saving…' : 'Save changes'}
-        </button>
-      </form>
-    </div>
+          <FormField
+            label="New password"
+            type="password"
+            value={form.newPassword}
+            onChange={(v) => setForm((f) => ({ ...f, newPassword: v }))}
+            autoComplete="new-password"
+            hint="At least 8 chars, including upper/lowercase, number and symbol"
+            allowReveal
+          />
+
+          <FormField
+            label="Confirm new password"
+            type="password"
+            value={form.confirmNewPassword}
+            onChange={(v) => setForm((f) => ({ ...f, confirmNewPassword: v }))}
+            autoComplete="new-password"
+            allowReveal
+          />
+
+          {error && <p className="text-sm text-rock-ember">{error}</p>}
+          {success && <p className="text-sm text-rock-goldlight">{success}</p>}
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
+          >
+            {submitting ? 'Saving…' : 'Save changes'}
+          </button>
+        </form>
+      </div>
+    </ThemedPage>
   )
 }

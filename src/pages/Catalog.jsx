@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { api } from '../api/client'
 import CourseCard from '../components/CourseCard'
 import Marquee from '../components/Marquee'
+import ThemedPage from '../components/ThemedPage'
 
 export default function Catalog() {
   const [courses, setCourses] = useState(null)
@@ -15,7 +16,7 @@ export default function Catalog() {
   }, [])
 
   return (
-    <div>
+    <ThemedPage variant="catalog">
       <Marquee items={['New season dropping soon', 'Pick your path', 'Learn at your pace']} />
 
       <div className="mx-auto max-w-6xl px-6 py-16">
@@ -38,6 +39,6 @@ export default function Catalog() {
           </div>
         )}
       </div>
-    </div>
+    </ThemedPage>
   )
 }
