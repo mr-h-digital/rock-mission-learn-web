@@ -12,7 +12,7 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#091121]/26 via-[#101f34]/48 to-[#0a1220]/74',
   },
   dashboard: {
-    imageUrl: 'https://images.pexels.com/photos/723425/pexels-photo-723425.jpeg?auto=compress&cs=tinysrgb&w=2200',
+    imageUrl: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=2200',
     gradientClass: 'bg-gradient-to-b from-[#0b1321]/24 via-[#10223a]/42 to-[#0f1627]/70',
   },
   teach: {
@@ -43,6 +43,10 @@ export default function ThemedPage({ variant = 'catalog', children }) {
           src={backdrop.imageUrl}
           alt=""
           aria-hidden="true"
+          onError={(e) => {
+            e.currentTarget.onerror = null
+            e.currentTarget.src = '/images/home-bg-designer-58.png'
+          }}
           className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(38,232,215,0.15),rgba(9,16,28,0.52)_58%)]" />
