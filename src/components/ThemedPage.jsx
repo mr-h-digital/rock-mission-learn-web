@@ -1,6 +1,6 @@
 const BACKDROPS = {
   catalog: {
-    imageUrl: 'https://images.pexels.com/photos/267559/pexels-photo-267559.jpeg?auto=compress&cs=tinysrgb&w=2200',
+    imageUrl: '/images/courses-bg-designer-60.png',
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/26 via-[#111a2d]/46 to-[#0e1524]/68',
   },
   detail: {
