@@ -12,7 +12,7 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#091121]/26 via-[#101f34]/48 to-[#0a1220]/74',
   },
   dashboard: {
-    imageUrl: 'https://images.pexels.com/photos/325185/pexels-photo-325185.jpeg?auto=compress&cs=tinysrgb&w=2200',
+    imageUrl: '/images/dashboard-bg-designer-62.png',
     gradientClass: 'bg-gradient-to-b from-[#0b1321]/24 via-[#10223a]/42 to-[#0f1627]/70',
   },
   teach: {
