@@ -16,7 +16,7 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#0b1321]/24 via-[#10223a]/42 to-[#0f1627]/70',
   },
   teach: {
-    imageUrl: 'https://images.pexels.com/photos/2203051/pexels-photo-2203051.jpeg?auto=compress&cs=tinysrgb&w=2200',
+    imageUrl: '/images/teach-bg-designer-65.png',
     gradientClass: 'bg-gradient-to-b from-[#0b1320]/22 via-[#15253e]/44 to-[#0e1628]/68',
   },
   builder: {
