@@ -28,7 +28,7 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/28 via-[#162640]/50 to-[#0c1525]/72',
   },
   settings: {
-    imageUrl: 'https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&cs=tinysrgb&w=2200',
+    imageUrl: '/images/settings-bg-designer-63.png',
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/24 via-[#12233a]/44 to-[#0d1626]/68',
   },
 }
