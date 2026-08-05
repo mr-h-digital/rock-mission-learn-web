@@ -7,10 +7,44 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  function clearAuthState() {
+    localStorage.removeItem('rm_token')
+    localStorage.removeItem('rm_user')
+    setUser(null)
+  }
+
   useEffect(() => {
     const stored = localStorage.getItem('rm_user')
-    if (stored) setUser(JSON.parse(stored))
-    setLoading(false)
+    const token = localStorage.getItem('rm_token')
+
+    function handleInvalidAuth() {
+      clearAuthState()
+    }
+
+    window.addEventListener('rm-auth-invalid', handleInvalidAuth)
+
+    if (!stored || !token) {
+      clearAuthState()
+      setLoading(false)
+      return () => window.removeEventListener('rm-auth-invalid', handleInvalidAuth)
+    }
+
+    api
+      .get('/api/users/me')
+      .then((profile) => {
+        persistUser({
+          id: profile.userId,
+          email: profile.email,
+          displayName: profile.displayName,
+          role: profile.role,
+        })
+      })
+      .catch(() => {
+        clearAuthState()
+      })
+      .finally(() => setLoading(false))
+
+    return () => window.removeEventListener('rm-auth-invalid', handleInvalidAuth)
   }, [])
 
   function persistUser(userInfo) {
@@ -52,9 +86,7 @@ export function AuthProvider({ children }) {
   }
 
   function logout() {
-    localStorage.removeItem('rm_token')
-    localStorage.removeItem('rm_user')
-    setUser(null)
+    clearAuthState()
   }
 
   const isAdmin = user?.role === 'ADMIN'

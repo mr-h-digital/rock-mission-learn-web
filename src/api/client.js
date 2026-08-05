@@ -6,12 +6,21 @@ function getToken() {
   return localStorage.getItem('rm_token')
 }
 
+function clearStoredAuth() {
+  localStorage.removeItem('rm_token')
+  localStorage.removeItem('rm_user')
+}
+
 async function request(path, { method = 'GET', body, auth = true } = {}) {
   const headers = { 'Content-Type': 'application/json' }
+  let hadToken = false
 
   if (auth) {
     const token = getToken()
-    if (token) headers.Authorization = `Bearer ${token}`
+    if (token) {
+      hadToken = true
+      headers.Authorization = `Bearer ${token}`
+    }
   }
 
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -31,6 +40,18 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
           .filter(Boolean)
           .join(' | ')
       : ''
+
+    const shouldResetSession =
+      auth &&
+      hadToken &&
+      (res.status === 401 || (res.status === 403 && !data?.message && !fieldErrors))
+
+    if (shouldResetSession) {
+      clearStoredAuth()
+      window.dispatchEvent(new Event('rm-auth-invalid'))
+      throw new Error('Your session has expired. Please sign in again.')
+    }
+
     const message = fieldErrors || data?.message || `Request failed (${res.status})`
     throw new Error(message)
   }
