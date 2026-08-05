@@ -13,6 +13,11 @@ export function AuthProvider({ children }) {
     setLoading(false)
   }, [])
 
+  function persistUser(userInfo) {
+    localStorage.setItem('rm_user', JSON.stringify(userInfo))
+    setUser(userInfo)
+  }
+
   function persist(authResponse) {
     localStorage.setItem('rm_token', authResponse.token)
     const userInfo = {
@@ -21,8 +26,7 @@ export function AuthProvider({ children }) {
       displayName: authResponse.displayName,
       role: authResponse.role,
     }
-    localStorage.setItem('rm_user', JSON.stringify(userInfo))
-    setUser(userInfo)
+    persistUser(userInfo)
   }
 
   async function signup(email, password, displayName) {
@@ -35,16 +39,29 @@ export function AuthProvider({ children }) {
     persist(res)
   }
 
+  async function updateProfile(payload) {
+    const res = await api.patch('/api/users/me', payload)
+    const userInfo = {
+      id: res.userId,
+      email: res.email,
+      displayName: res.displayName,
+      role: res.role,
+    }
+    persistUser(userInfo)
+    return res
+  }
+
   function logout() {
     localStorage.removeItem('rm_token')
     localStorage.removeItem('rm_user')
     setUser(null)
   }
 
+  const isAdmin = user?.role === 'ADMIN'
   const isEducator = user?.role === 'EDUCATOR' || user?.role === 'ADMIN'
 
   return (
-    <AuthContext.Provider value={{ user, loading, signup, login, logout, isEducator }}>
+    <AuthContext.Provider value={{ user, loading, signup, login, updateProfile, logout, isAdmin, isEducator }}>
       {children}
     </AuthContext.Provider>
   )

@@ -10,6 +10,10 @@ import SignUp from './pages/SignUp'
 import Dashboard from './pages/Dashboard'
 import Teach from './pages/Teach'
 import CourseBuilder from './pages/CourseBuilder'
+import AdminUsers from './pages/AdminUsers'
+import Settings from './pages/Settings'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
 
 export default function App() {
   return (
@@ -30,11 +34,21 @@ export default function App() {
           />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
               </ProtectedRoute>
             }
           />
@@ -51,6 +65,14 @@ export default function App() {
             element={
               <ProtectedRoute requireEducator>
                 <CourseBuilder />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute requireAdmin>
+                <AdminUsers />
               </ProtectedRoute>
             }
           />

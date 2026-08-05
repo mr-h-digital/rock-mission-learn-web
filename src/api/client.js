@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080'
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  (import.meta.env.PROD ? 'https://api.rockmission.co.za' : 'http://localhost:8080')
 
 function getToken() {
   return localStorage.getItem('rm_token')
@@ -23,8 +25,13 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
   const data = await res.json().catch(() => null)
 
   if (!res.ok) {
-    // Matches the shape returned by GlobalExceptionHandler on the backend
-    const message = data?.message || `Request failed (${res.status})`
+    // Matches the shape returned by GlobalExceptionHandler on the backend.
+    const fieldErrors = data?.fieldErrors
+      ? Object.values(data.fieldErrors)
+          .filter(Boolean)
+          .join(' | ')
+      : ''
+    const message = fieldErrors || data?.message || `Request failed (${res.status})`
     throw new Error(message)
   }
 

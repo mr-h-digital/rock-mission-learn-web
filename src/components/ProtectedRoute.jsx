@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
-export default function ProtectedRoute({ children, requireEducator = false }) {
-  const { user, loading, isEducator } = useAuth()
+export default function ProtectedRoute({ children, requireEducator = false, requireAdmin = false }) {
+  const { user, loading, isAdmin, isEducator } = useAuth()
   const location = useLocation()
 
   if (loading) return null
@@ -15,6 +15,10 @@ export default function ProtectedRoute({ children, requireEducator = false }) {
   }
 
   if (requireEducator && !isEducator) {
+    return <Navigate to="/dashboard" replace />
+  }
+
+  if (requireAdmin && !isAdmin) {
     return <Navigate to="/dashboard" replace />
   }
 

@@ -101,7 +101,7 @@ export default function CourseBuilder() {
         ))}
       </div>
 
-      <form onSubmit={handleAddModule} className="mt-6 flex gap-3">
+      <form onSubmit={handleAddModule} className="mt-6 flex flex-col gap-3 sm:flex-row">
         <input
           value={newModuleTitle}
           onChange={(e) => setNewModuleTitle(e.target.value)}
@@ -111,7 +111,7 @@ export default function CourseBuilder() {
         <button
           type="submit"
           disabled={addingModule}
-          className="rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide hover:bg-rock-gold/10 transition-colors disabled:opacity-50"
+          className="w-full rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10 disabled:opacity-50 sm:w-auto"
         >
           Add module
         </button>
@@ -122,7 +122,8 @@ export default function CourseBuilder() {
         {!roster && <p className="mt-4 text-sm text-rock-muted">Loading…</p>}
         {roster && roster.length === 0 && <p className="mt-4 text-sm text-rock-muted">No one has enrolled yet.</p>}
         {roster && roster.length > 0 && (
-          <table className="mt-4 w-full text-left text-sm">
+          <div className="mt-4 overflow-x-auto">
+            <table className="min-w-[560px] w-full text-left text-sm">
             <thead>
               <tr className="border-b border-rock-border text-xs font-bold uppercase tracking-wide text-rock-muted">
                 <th className="py-2 font-bold">Student</th>
@@ -144,7 +145,8 @@ export default function CourseBuilder() {
                 </tr>
               ))}
             </tbody>
-          </table>
+            </table>
+          </div>
         )}
       </div>
     </div>
@@ -189,7 +191,7 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
 
   return (
     <div className="rounded-2xl border border-rock-border bg-rock-panel p-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-body text-xs font-bold uppercase tracking-wide text-rock-gold">
             Module {String(index + 1).padStart(2, '0')}
@@ -205,7 +207,7 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
         {module.lessons.map((lesson) => (
           <li
             key={lesson.id}
-            className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] px-3.5 py-2.5 text-sm"
+            className="flex flex-col gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3.5 py-2.5 text-sm sm:flex-row sm:items-center sm:justify-between"
           >
             <span>{lesson.title}</span>
             <button
@@ -241,11 +243,11 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
             onChange={(v) => setLessonForm((f) => ({ ...f, durationSeconds: v }))}
           />
           {error && <p className="text-sm text-rock-ember">{error}</p>}
-          <div className="flex gap-2.5">
+          <div className="flex flex-col gap-2.5 sm:flex-row">
             <button
               type="submit"
               disabled={adding}
-              className="rounded-full bg-grad-gold px-5 py-2 text-xs font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity disabled:opacity-60"
+              className="rounded-full bg-grad-gold px-5 py-2 text-xs font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
             >
               {adding ? 'Adding…' : 'Add lesson'}
             </button>

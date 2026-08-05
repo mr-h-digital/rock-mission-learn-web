@@ -30,6 +30,15 @@
     background-color: theme('colors.rock.gold');
     color: #0b1220;
   }
+
+  /* Keep a single reveal control by hiding native browser password icons. */
+  input[type='password']::-ms-reveal,
+  input[type='password']::-ms-clear,
+  input[type='password']::-webkit-credentials-auto-fill-button {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+  }
 }
 
 .marquee-track {
