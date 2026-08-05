@@ -17,6 +17,11 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
 
   if (auth) {
     const token = getToken()
+    if (!token) {
+      clearStoredAuth()
+      window.dispatchEvent(new Event('rm-auth-invalid'))
+      throw new Error('Your session has expired. Please sign in again.')
+    }
     if (token) {
       hadToken = true
       headers.Authorization = `Bearer ${token}`

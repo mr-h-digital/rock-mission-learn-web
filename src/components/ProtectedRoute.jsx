@@ -4,10 +4,11 @@ import { useAuth } from '../context/AuthContext'
 export default function ProtectedRoute({ children, requireEducator = false, requireAdmin = false }) {
   const { user, loading, isAdmin, isEducator } = useAuth()
   const location = useLocation()
+  const hasToken = !!localStorage.getItem('rm_token')
 
   if (loading) return null
 
-  if (!user) {
+  if (!user || !hasToken) {
     // Remember where they were headed so sign-in can bounce them back —
     // this is what powers the "?action=enroll" deep link from the main site.
     sessionStorage.setItem('rm_redirect_after_auth', location.pathname + location.search)
