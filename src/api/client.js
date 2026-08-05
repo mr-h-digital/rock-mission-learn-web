@@ -46,10 +46,7 @@ async function request(path, { method = 'GET', body, auth = true } = {}) {
           .join(' | ')
       : ''
 
-    const shouldResetSession =
-      auth &&
-      hadToken &&
-      (res.status === 401 || (res.status === 403 && !data?.message && !fieldErrors))
+    const shouldResetSession = auth && hadToken && res.status === 401
 
     if (shouldResetSession) {
       clearStoredAuth()
