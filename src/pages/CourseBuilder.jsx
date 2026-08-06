@@ -11,8 +11,15 @@ export default function CourseBuilder() {
   const [roster, setRoster] = useState(null)
   const [pageError, setPageError] = useState(null)
   const [actionError, setActionError] = useState(null)
+  const [actionSuccess, setActionSuccess] = useState(null)
   const [newModuleTitle, setNewModuleTitle] = useState('')
   const [addingModule, setAddingModule] = useState(false)
+
+  useEffect(() => {
+    if (!actionSuccess) return
+    const timer = setTimeout(() => setActionSuccess(null), 3000)
+    return () => clearTimeout(timer)
+  }, [actionSuccess])
 
   function loadCourse() {
     api
@@ -39,17 +46,21 @@ export default function CourseBuilder() {
     e.preventDefault()
     const title = newModuleTitle.trim()
     if (!title) {
+      setActionSuccess(null)
       setActionError('Please enter a module title.')
       return
     }
 
     setActionError(null)
+    setActionSuccess(null)
     setAddingModule(true)
     try {
       await api.post(`/api/courses/${course.id}/modules`, { title })
       setNewModuleTitle('')
+      setActionSuccess('Module added successfully.')
       loadCourse()
     } catch (err) {
+      setActionSuccess(null)
       setActionError(err.message)
     } finally {
       setAddingModule(false)
@@ -59,9 +70,12 @@ export default function CourseBuilder() {
   async function handleDeleteModule(moduleId) {
     try {
       setActionError(null)
+      setActionSuccess(null)
       await api.del(`/api/courses/${course.id}/modules/${moduleId}`)
+      setActionSuccess('Module removed successfully.')
       loadCourse()
     } catch (err) {
+      setActionSuccess(null)
       setActionError(err.message)
     }
   }
@@ -69,9 +83,12 @@ export default function CourseBuilder() {
   async function handlePublish() {
     try {
       setActionError(null)
+      setActionSuccess(null)
       const updated = await api.patch(`/api/courses/${course.id}/publish`)
       setCourse(updated)
+      setActionSuccess('Course published successfully.')
     } catch (err) {
+      setActionSuccess(null)
       setActionError(err.message)
     }
   }
@@ -141,6 +158,7 @@ export default function CourseBuilder() {
             {addingModule ? 'Adding…' : 'Add module'}
           </button>
         </form>
+        {actionSuccess && <p className="mt-3 text-sm text-rock-goldlight">{actionSuccess}</p>}
         {actionError && <p className="mt-3 text-sm text-rock-ember">{actionError}</p>}
 
         <div className="mt-14 border-t border-rock-border pt-8">
