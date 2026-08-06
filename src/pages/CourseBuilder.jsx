@@ -9,7 +9,8 @@ export default function CourseBuilder() {
   const [course, setCourse] = useState(null)
   const [modules, setModules] = useState([])
   const [roster, setRoster] = useState(null)
-  const [error, setError] = useState(null)
+  const [pageError, setPageError] = useState(null)
+  const [actionError, setActionError] = useState(null)
   const [newModuleTitle, setNewModuleTitle] = useState('')
   const [addingModule, setAddingModule] = useState(false)
 
@@ -17,12 +18,13 @@ export default function CourseBuilder() {
     api
       .get(`/api/courses/${slug}`, { auth: false })
       .then((c) => {
+        setPageError(null)
         setCourse(c)
         return api.get(`/api/courses/${c.id}/modules`)
         // authenticated call, but modules GET is public too — fine either way
       })
       .then(setModules)
-      .catch((err) => setError(err.message))
+      .catch((err) => setPageError(err.message))
   }
 
   useEffect(loadCourse, [slug])
@@ -35,14 +37,20 @@ export default function CourseBuilder() {
 
   async function handleAddModule(e) {
     e.preventDefault()
-    if (!newModuleTitle.trim()) return
+    const title = newModuleTitle.trim()
+    if (!title) {
+      setActionError('Please enter a module title.')
+      return
+    }
+
+    setActionError(null)
     setAddingModule(true)
     try {
-      await api.post(`/api/courses/${course.id}/modules`, { title: newModuleTitle })
+      await api.post(`/api/courses/${course.id}/modules`, { title })
       setNewModuleTitle('')
       loadCourse()
     } catch (err) {
-      setError(err.message)
+      setActionError(err.message)
     } finally {
       setAddingModule(false)
     }
@@ -50,26 +58,28 @@ export default function CourseBuilder() {
 
   async function handleDeleteModule(moduleId) {
     try {
+      setActionError(null)
       await api.del(`/api/courses/${course.id}/modules/${moduleId}`)
       loadCourse()
     } catch (err) {
-      setError(err.message)
+      setActionError(err.message)
     }
   }
 
   async function handlePublish() {
     try {
+      setActionError(null)
       const updated = await api.patch(`/api/courses/${course.id}/publish`)
       setCourse(updated)
     } catch (err) {
-      setError(err.message)
+      setActionError(err.message)
     }
   }
 
-  if (error) {
+  if (pageError) {
     return (
       <ThemedPage variant="builder">
-        <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-ember">{error}</p>
+        <p className="mx-auto max-w-3xl px-6 py-20 text-sm text-rock-ember">{pageError}</p>
       </ThemedPage>
     )
   }
@@ -128,9 +138,10 @@ export default function CourseBuilder() {
             disabled={addingModule}
             className="w-full rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10 disabled:opacity-50 sm:w-auto"
           >
-            Add module
+            {addingModule ? 'Adding…' : 'Add module'}
           </button>
         </form>
+        {actionError && <p className="mt-3 text-sm text-rock-ember">{actionError}</p>}
 
         <div className="mt-14 border-t border-rock-border pt-8">
           <h2 className="font-display text-3xl">Roster</h2>
