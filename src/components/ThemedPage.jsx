@@ -1,6 +1,6 @@
 const BACKDROPS = {
   catalog: {
-    imageUrl: '/images/courses-bg-designer-60.png',
+    imageUrl: '/images/courses-bg-designer-60.webp',
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/26 via-[#111a2d]/46 to-[#0e1524]/68',
   },
   detail: {
@@ -12,11 +12,11 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#091121]/26 via-[#101f34]/48 to-[#0a1220]/74',
   },
   dashboard: {
-    imageUrl: '/images/dashboard-bg-designer-62.png',
+    imageUrl: '/images/dashboard-bg-designer-62.webp',
     gradientClass: 'bg-gradient-to-b from-[#0b1321]/24 via-[#10223a]/42 to-[#0f1627]/70',
   },
   teach: {
-    imageUrl: '/images/teach-bg-designer-65.png',
+    imageUrl: '/images/teach-bg-designer-65.webp',
     gradientClass: 'bg-gradient-to-b from-[#0b1320]/22 via-[#15253e]/44 to-[#0e1628]/68',
   },
   builder: {
@@ -24,11 +24,11 @@ const BACKDROPS = {
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/24 via-[#14253f]/44 to-[#101827]/70',
   },
   admin: {
-    imageUrl: '/images/admin-bg-designer-66.png',
+    imageUrl: '/images/admin-bg-designer-66.webp',
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/28 via-[#162640]/50 to-[#0c1525]/72',
   },
   settings: {
-    imageUrl: '/images/settings-bg-designer-63.png',
+    imageUrl: '/images/settings-bg-designer-63.webp',
     gradientClass: 'bg-gradient-to-b from-[#0a1220]/24 via-[#12233a]/44 to-[#0d1626]/68',
   },
 }
@@ -45,7 +45,7 @@ export default function ThemedPage({ variant = 'catalog', children }) {
           aria-hidden="true"
           onError={(e) => {
             e.currentTarget.onerror = null
-            e.currentTarget.src = '/images/home-bg-designer-58.png'
+            e.currentTarget.src = '/images/home-bg-designer-58.webp'
           }}
           className="h-full w-full object-cover object-center"
         />

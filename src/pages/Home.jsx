@@ -11,7 +11,7 @@ export default function Home() {
     <div className="relative isolate overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <img
-          src="/images/home-bg-designer-67.png"
+          src="/images/home-bg-designer-67.webp"
           alt=""
           aria-hidden="true"
           className="h-full w-full object-cover object-center"

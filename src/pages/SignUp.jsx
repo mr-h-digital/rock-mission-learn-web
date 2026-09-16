@@ -49,7 +49,7 @@ export default function SignUp() {
     <div className="relative isolate min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <img
-          src="/images/auth-bg-designer-59.png"
+          src="/images/auth-bg-designer-59.webp"
           alt=""
           aria-hidden="true"
           className="h-full w-full object-cover object-center"

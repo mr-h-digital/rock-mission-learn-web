@@ -56,7 +56,7 @@ export default function ResetPassword() {
   return (
     <div className="relative isolate min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <img src="/images/auth-bg-designer-59.png" alt="" aria-hidden="true" className="h-full w-full object-cover object-center" />
+        <img src="/images/auth-bg-designer-59.webp" alt="" aria-hidden="true" className="h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_16%,rgba(18,28,42,0.16),rgba(12,17,28,0.52)_60%)]" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0b1320]/28 via-[#0f1a2b]/40 to-[#101521]/56" />
       </div>
