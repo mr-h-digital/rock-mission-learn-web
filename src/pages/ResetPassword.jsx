@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { api } from '../api/client'
+import AuthShell from '../components/AuthShell'
 import FormField from '../components/FormField'
 
 export default function ResetPassword() {
@@ -54,66 +55,54 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="relative isolate min-h-screen overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <img src="/images/auth-bg-designer-59.webp" alt="" aria-hidden="true" className="h-full w-full object-cover object-center" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_16%,rgba(18,28,42,0.16),rgba(12,17,28,0.52)_60%)]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0b1320]/28 via-[#0f1a2b]/40 to-[#101521]/56" />
-      </div>
+    <AuthShell
+      eyebrow="Account recovery"
+      title="Set your new password."
+      description="Use your reset token to secure your account again and continue your discipleship journey."
+      footer={(
+        <>
+          Need another link?{' '}
+          <Link to="/forgot-password" className="text-rock-gold hover:underline">
+            Request reset token
+          </Link>
+        </>
+      )}
+    >
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <FormField
+          label="Reset token"
+          value={token}
+          onChange={setToken}
+          autoComplete="off"
+          required
+        />
+        <FormField
+          label="New password"
+          type="password"
+          value={newPassword}
+          onChange={setNewPassword}
+          autoComplete="new-password"
+          hint="At least 8 chars, including upper/lowercase, number and symbol"
+          allowReveal
+          required
+        />
+        <FormField
+          label="Confirm new password"
+          type="password"
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          autoComplete="new-password"
+          allowReveal
+          required
+        />
 
-      <div className="mx-auto max-w-md px-6 py-20">
-        <div className="rounded-2xl border border-rock-border bg-[#0f1a2b]/58 p-6 backdrop-blur-md sm:p-8">
-          <h1 className="font-display text-5xl">Set new password</h1>
-          <p className="mt-2 text-sm text-rock-muted">Use your reset token to create a new password.</p>
+        {error && <p className="text-sm text-rock-ember">{error}</p>}
+        {success && <p className="text-sm text-rock-goldlight">{success}</p>}
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-            <FormField
-              label="Reset token"
-              value={token}
-              onChange={setToken}
-              autoComplete="off"
-              required
-            />
-            <FormField
-              label="New password"
-              type="password"
-              value={newPassword}
-              onChange={setNewPassword}
-              autoComplete="new-password"
-              hint="At least 8 chars, including upper/lowercase, number and symbol"
-              allowReveal
-              required
-            />
-            <FormField
-              label="Confirm new password"
-              type="password"
-              value={confirmPassword}
-              onChange={setConfirmPassword}
-              autoComplete="new-password"
-              allowReveal
-              required
-            />
-
-            {error && <p className="text-sm text-rock-ember">{error}</p>}
-            {success && <p className="text-sm text-rock-goldlight">{success}</p>}
-
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full rounded-full bg-grad-gold px-6 py-3.5 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
-            >
-              {submitting ? 'Updating password…' : 'Update password'}
-            </button>
-          </form>
-
-          <p className="mt-6 text-sm text-rock-muted">
-            Need another link?{' '}
-            <Link to="/forgot-password" className="text-rock-gold hover:underline">
-              Request reset token
-            </Link>
-          </p>
-        </div>
-      </div>
-    </div>
+        <button type="submit" disabled={submitting} className="armory-button-primary w-full">
+          {submitting ? 'Updating password…' : 'Update password'}
+        </button>
+      </form>
+    </AuthShell>
   )
 }

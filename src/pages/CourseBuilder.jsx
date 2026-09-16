@@ -111,16 +111,17 @@ export default function CourseBuilder() {
 
   return (
     <ThemedPage variant="builder">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <Link to="/teach" className="text-xs font-bold uppercase tracking-wide text-rock-muted hover:text-rock-gold">
-          ← Your courses
+      <div className="armory-shell max-w-5xl py-16">
+        <Link to="/teach" className="text-xs font-bold uppercase tracking-[0.18em] text-rock-muted hover:text-rock-gold">
+          ← Back to Educator Studio
         </Link>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+        <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
           <div>
-            <h1 className="font-display text-5xl">{course.title}</h1>
+            <p className="armory-eyebrow">Path Builder</p>
+            <h1 className="mt-3 font-display text-display-4 tracking-[-0.03em] text-rock-cream">{course.title}</h1>
             <span
-              className={`mt-2 inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
+              className={`mt-3 inline-block rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.18em] ${
                 course.status === 'PUBLISHED' ? 'bg-rock-gold/15 text-rock-goldlight' : 'bg-white/10 text-rock-muted'
               }`}
             >
@@ -130,9 +131,9 @@ export default function CourseBuilder() {
           {course.status === 'DRAFT' && (
             <button
               onClick={handlePublish}
-              className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity"
+              className="armory-button-primary w-full sm:w-auto"
             >
-              Publish course
+              Publish path
             </button>
           )}
         </div>
@@ -143,17 +144,17 @@ export default function CourseBuilder() {
           ))}
         </div>
 
-        <form onSubmit={handleAddModule} className="mt-6 flex flex-col gap-3 sm:flex-row">
+        <form onSubmit={handleAddModule} className="armory-card mt-6 flex flex-col gap-3 p-5 sm:flex-row sm:items-end">
           <input
             value={newModuleTitle}
             onChange={(e) => setNewModuleTitle(e.target.value)}
             placeholder="New module title"
-            className="flex-1 rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none placeholder:text-rock-muted/50 focus:border-rock-gold"
+            className="armory-input flex-1"
           />
           <button
             type="submit"
             disabled={addingModule}
-            className="w-full rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10 disabled:opacity-50 sm:w-auto"
+            className="armory-button-secondary w-full text-xs disabled:opacity-50 sm:w-auto"
           >
             {addingModule ? 'Adding…' : 'Add module'}
           </button>
@@ -162,11 +163,11 @@ export default function CourseBuilder() {
         {actionError && <p className="mt-3 text-sm text-rock-ember">{actionError}</p>}
 
         <div className="mt-14 border-t border-rock-border pt-8">
-          <h2 className="font-display text-3xl">Roster</h2>
+          <h2 className="font-display text-display-3 tracking-[-0.03em] text-rock-cream">Learner roster</h2>
           {!roster && <p className="mt-4 text-sm text-rock-muted">Loading…</p>}
           {roster && roster.length === 0 && <p className="mt-4 text-sm text-rock-muted">No one has enrolled yet.</p>}
           {roster && roster.length > 0 && (
-            <div className="mt-4 overflow-x-auto">
+            <div className="armory-card mt-4 overflow-x-auto p-4">
               <table className="min-w-[560px] w-full text-left text-sm">
               <thead>
                 <tr className="border-b border-rock-border text-xs font-bold uppercase tracking-wide text-rock-muted">
@@ -235,15 +236,15 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
   }
 
   return (
-    <div className="rounded-2xl border border-rock-border bg-rock-panel p-5">
+    <div className="armory-card p-5">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="font-body text-xs font-bold uppercase tracking-wide text-rock-gold">
+          <p className="armory-eyebrow">
             Module {String(index + 1).padStart(2, '0')}
           </p>
-          <h3 className="mt-1 font-display text-2xl">{module.title}</h3>
+          <h3 className="mt-2 font-display text-display-2 tracking-[-0.03em] text-rock-cream">{module.title}</h3>
         </div>
-        <button onClick={onDelete} className="text-xs font-bold uppercase tracking-wide text-rock-ember hover:underline">
+        <button onClick={onDelete} className="w-fit text-xs font-bold uppercase tracking-wide text-rock-ember hover:underline">
           Delete
         </button>
       </div>
@@ -252,9 +253,9 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
         {module.lessons.map((lesson) => (
           <li
             key={lesson.id}
-            className="flex flex-col gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3.5 py-2.5 text-sm sm:flex-row sm:items-center sm:justify-between"
+            className="flex flex-col gap-2 rounded-xl border border-white/5 bg-white/[0.02] px-3.5 py-3 text-sm sm:flex-row sm:items-center sm:justify-between"
           >
-            <span>{lesson.title}</span>
+            <span className="min-w-0 break-words">{lesson.title}</span>
             <button
               onClick={() => handleDeleteLesson(lesson.id)}
               className="text-xs font-bold uppercase tracking-wide text-rock-ember hover:underline"
@@ -292,14 +293,14 @@ function ModuleEditor({ module, index, onChanged, onDelete }) {
             <button
               type="submit"
               disabled={adding}
-              className="rounded-full bg-grad-gold px-5 py-2 text-xs font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
+              className="armory-button-primary px-5 py-2 text-xs disabled:opacity-60"
             >
               {adding ? 'Adding…' : 'Add lesson'}
             </button>
             <button
               type="button"
               onClick={() => setShowAddLesson(false)}
-              className="rounded-full border border-rock-border px-5 py-2 text-xs font-bold uppercase tracking-wide text-rock-muted hover:text-rock-cream"
+              className="armory-button-secondary px-5 py-2 text-xs"
             >
               Cancel
             </button>

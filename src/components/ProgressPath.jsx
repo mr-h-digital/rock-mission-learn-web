@@ -6,6 +6,7 @@
  */
 export default function ProgressPath({ completed, total, size = 'md' }) {
   const safeTotal = Math.max(total, 1)
+  const percentage = Math.min(100, Math.round((completed / safeTotal) * 100))
   const stones = Array.from({ length: safeTotal }, (_, i) => {
     if (i < completed) return 'lit'
     if (i === completed) return 'ember'
@@ -30,8 +31,8 @@ export default function ProgressPath({ completed, total, size = 'md' }) {
           />
         ))}
       </div>
-      <span className="font-body text-xs text-rock-muted whitespace-nowrap">
-        {completed}/{total}
+      <span className="font-body whitespace-nowrap text-xs text-rock-muted">
+        {completed}/{total} · {percentage}%
       </span>
     </div>
   )

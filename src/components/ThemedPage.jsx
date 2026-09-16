@@ -49,8 +49,9 @@ export default function ThemedPage({ variant = 'catalog', children }) {
           }}
           className="h-full w-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(38,232,215,0.15),rgba(9,16,28,0.52)_58%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_14%,rgba(32,217,194,0.15),rgba(9,16,28,0.52)_58%)]" />
         <div className={`absolute inset-0 ${backdrop.gradientClass}`} />
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0)_36%,rgba(255,255,255,0.015)_100%)]" />
       </div>
 
       {children}

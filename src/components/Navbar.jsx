@@ -19,15 +19,26 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-10 border-b border-rock-border bg-rock-bg/85 backdrop-blur-xl">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
+      <div className="armory-shell flex items-center justify-between gap-3 py-3 sm:py-4">
         <Link
           to="/"
-          className="font-display text-xl leading-none tracking-wide sm:text-2xl"
+          className="group flex items-center gap-3 leading-none"
           onClick={closeMenu}
         >
-          ROCK<span className="text-rock-gold">MISSION</span>{' '}
-          <span className="hidden align-middle font-body text-[10px] font-bold uppercase tracking-[0.2em] text-rock-muted sm:inline">
-            Bible Study
+          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-rock-border bg-rock-night/80 p-2 sm:h-14 sm:w-14">
+            <img
+              src="/brand/armory-mark.png"
+              alt="The Armory by Rock Mission"
+              className="h-full w-full object-contain"
+            />
+          </span>
+          <span className="flex flex-col">
+            <span className="font-display text-base tracking-[0.06em] text-rock-cream sm:text-xl">
+              THE <span className="bg-grad-gold bg-clip-text text-transparent">ARMORY</span>
+            </span>
+            <span className="mt-1 hidden font-body text-[9px] font-bold uppercase tracking-[0.24em] text-rock-muted lg:inline">
+              Equipped by Truth
+            </span>
           </span>
         </Link>
 
@@ -36,7 +47,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link to="/courses" className="text-rock-muted hover:text-rock-gold transition-colors">
-            Courses
+            Training Paths
           </Link>
           <a
             href="https://rockmission.co.za"
@@ -50,26 +61,26 @@ export default function Navbar() {
           {user ? (
             <>
               <Link to="/dashboard" className="text-rock-muted hover:text-rock-gold transition-colors">
-                My learning
+                Dashboard
               </Link>
               <Link to="/settings" className="text-rock-muted hover:text-rock-gold transition-colors">
                 Settings
               </Link>
               {isEducator && (
                 <Link to="/teach" className="text-rock-muted hover:text-rock-gold transition-colors">
-                  Teach
+                  Educator Studio
                 </Link>
               )}
               {isAdmin && (
                 <Link to="/admin" className="text-rock-muted hover:text-rock-gold transition-colors">
-                  Admin
+                  Platform Admin
                 </Link>
               )}
               <span className="text-white/20">|</span>
               <span className="text-rock-cream/80">{user.displayName}</span>
               <button
                 onClick={handleLogout}
-                className="rounded-full border border-rock-border px-3 py-1.5 text-xs text-rock-cream transition-colors hover:border-rock-gold hover:text-rock-gold"
+                className="armory-button-secondary px-4 py-2 text-xs"
               >
                 Sign out
               </button>
@@ -81,9 +92,9 @@ export default function Navbar() {
               </Link>
               <Link
                 to="/sign-up"
-                className="rounded-full bg-grad-gold px-5 py-2 text-xs font-extrabold uppercase tracking-wide text-[#0b1220] shadow-[0_10px_26px_rgba(32,227,207,0.28)] hover:opacity-90 transition-opacity"
+                className="armory-button-primary px-5 py-2 text-xs"
               >
-                Get started
+                Begin training
               </Link>
             </>
           )}
@@ -94,7 +105,7 @@ export default function Navbar() {
           aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-rock-border text-rock-cream md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-rock-border text-rock-cream md:hidden"
         >
           <span className="sr-only">Menu</span>
           <span className="flex w-5 flex-col gap-1.5">
@@ -111,12 +122,12 @@ export default function Navbar() {
 
       {menuOpen && (
         <nav className="border-t border-rock-border bg-rock-bg/95 md:hidden">
-          <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 font-body text-sm sm:px-6">
+          <div className="armory-shell flex flex-col gap-3 py-4 font-body text-sm">
             <Link to="/" onClick={closeMenu} className="text-rock-muted hover:text-rock-gold transition-colors">
               Home
             </Link>
             <Link to="/courses" onClick={closeMenu} className="text-rock-muted hover:text-rock-gold transition-colors">
-              Courses
+              Training Paths
             </Link>
             <a
               href="https://rockmission.co.za"
@@ -135,7 +146,7 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className="text-rock-muted hover:text-rock-gold transition-colors"
                 >
-                  My learning
+                  Dashboard
                 </Link>
                 <Link
                   to="/settings"
@@ -146,18 +157,18 @@ export default function Navbar() {
                 </Link>
                 {isEducator && (
                   <Link to="/teach" onClick={closeMenu} className="text-rock-muted hover:text-rock-gold transition-colors">
-                    Teach
+                    Educator Studio
                   </Link>
                 )}
                 {isAdmin && (
                   <Link to="/admin" onClick={closeMenu} className="text-rock-muted hover:text-rock-gold transition-colors">
-                    Admin
+                    Platform Admin
                   </Link>
                 )}
                 <span className="truncate text-xs uppercase tracking-wide text-rock-muted">{user.displayName}</span>
                 <button
                   onClick={handleLogout}
-                  className="w-full rounded-full border border-rock-border px-3 py-2 text-left text-xs text-rock-cream transition-colors hover:border-rock-gold hover:text-rock-gold"
+                  className="armory-button-secondary w-full justify-start px-4 py-2 text-left text-xs"
                 >
                   Sign out
                 </button>
@@ -170,9 +181,9 @@ export default function Navbar() {
                 <Link
                   to="/sign-up"
                   onClick={closeMenu}
-                  className="rounded-full bg-grad-gold px-5 py-2 text-center text-xs font-extrabold uppercase tracking-wide text-[#0b1220] shadow-[0_10px_26px_rgba(32,227,207,0.28)] hover:opacity-90 transition-opacity"
+                  className="armory-button-primary text-center text-xs"
                 >
-                  Get started
+                  Begin training
                 </Link>
               </>
             )}

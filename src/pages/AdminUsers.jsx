@@ -32,14 +32,14 @@ export default function AdminUsers() {
 
   return (
     <ThemedPage variant="admin">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">Admin</p>
-        <h1 className="mt-2 font-display text-5xl">User role management</h1>
-        <p className="mt-3 max-w-xl text-sm text-rock-muted">
+      <div className="armory-shell py-16">
+        <p className="armory-eyebrow">Platform administration</p>
+        <h1 className="mt-3 font-display text-display-4 tracking-[-0.03em] text-rock-cream">User role management</h1>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-rock-muted">
           Promote registered users to educator or admin, or return them to student access.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-4 rounded-2xl border border-rock-border bg-rock-panel p-6">
+        <form onSubmit={handleSubmit} className="armory-card mt-8 space-y-4 p-6">
           <label className="block">
             <span className="text-sm font-semibold text-rock-cream">User email</span>
             <input
@@ -48,7 +48,7 @@ export default function AdminUsers() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="user@example.com"
               required
-              className="mt-1.5 w-full rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none placeholder:text-rock-muted/50 focus:border-rock-gold"
+              className="armory-input"
             />
           </label>
 
@@ -57,7 +57,7 @@ export default function AdminUsers() {
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
-              className="mt-1.5 w-full rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none focus:border-rock-gold"
+              className="armory-input"
             >
               {ROLE_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -67,11 +67,7 @@ export default function AdminUsers() {
             </select>
           </label>
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
-          >
+          <button type="submit" disabled={submitting} className="armory-button-primary">
             {submitting ? 'Updating role…' : 'Update role'}
           </button>
         </form>
@@ -79,11 +75,11 @@ export default function AdminUsers() {
         {error && <p className="mt-5 text-sm text-rock-ember">{error}</p>}
 
         {result && (
-          <div className="mt-6 rounded-2xl border border-rock-border bg-rock-panel p-5">
-            <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Updated user</p>
+          <div className="armory-card mt-6 p-5">
+            <p className="armory-eyebrow">Updated user</p>
             <p className="mt-3 text-sm text-rock-cream">{result.displayName}</p>
             <p className="text-sm text-rock-muted">{result.email}</p>
-            <p className="mt-2 text-xs uppercase tracking-wide text-rock-goldlight">Role: {result.role}</p>
+            <p className="mt-2 text-xs uppercase tracking-[0.18em] text-rock-goldlight">Role: {result.role}</p>
           </div>
         )}
       </div>

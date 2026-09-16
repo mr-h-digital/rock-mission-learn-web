@@ -78,55 +78,58 @@ export default function CourseDetail() {
 
   return (
     <ThemedPage variant="detail">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">
-          Taught by {course.createdByName}
-        </p>
-        <h1 className="mt-2 font-display text-5xl">{course.title}</h1>
-        <p className="mt-4 text-rock-muted">{course.description}</p>
+      <div className="armory-shell py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p className="armory-eyebrow">Path overview · by {course.createdByName}</p>
+            <h1 className="mt-3 max-w-3xl font-display text-display-4 tracking-[-0.03em] text-rock-cream">{course.title}</h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-rock-muted">{course.description}</p>
 
-        <div className="mt-6 flex items-center gap-4 text-xs text-rock-muted/70">
-          <span>{modules.length} modules</span>
-          <span>·</span>
-          <span>{totalLessons} lessons</span>
-          <span>·</span>
-          <span>{course.enrolledCount} enrolled</span>
-        </div>
+            <div className="mt-6 flex flex-wrap gap-3 text-xs uppercase tracking-[0.18em] text-rock-muted2">
+              <span className="rounded-full border border-rock-border px-3 py-1.5">Starting out</span>
+              <span className="rounded-full border border-rock-border px-3 py-1.5">{modules.length} modules</span>
+              <span className="rounded-full border border-rock-border px-3 py-1.5">{totalLessons} lessons</span>
+              <span className="rounded-full border border-rock-border px-3 py-1.5">{course.enrolledCount} enrolled</span>
+            </div>
+          </div>
 
-        <div className="mt-8">
-          {enrolled ? (
-            <button
-              onClick={() => navigate(`/courses/${slug}/learn`)}
-              className="rounded-full bg-grad-gold px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] shadow-[0_12px_28px_rgba(32,227,207,0.32)] hover:opacity-90 transition-opacity"
-            >
-              You're enrolled — start learning
-            </button>
-          ) : (
-            <button
-              onClick={handleEnroll}
-              disabled={enrolling}
-              className="rounded-full bg-grad-gold px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] shadow-[0_12px_28px_rgba(255,47,165,0.32)] hover:opacity-90 transition-opacity disabled:opacity-50"
-            >
-              {enrolling ? 'Enrolling…' : 'Enroll in this course'}
-            </button>
-          )}
-          {enrollError && <p className="mt-3 text-sm text-rock-ember">{enrollError}</p>}
+          <aside className="armory-card p-6">
+            <p className="armory-eyebrow">Prepared for purpose</p>
+            <h2 className="mt-3 font-display text-display-2 tracking-[-0.03em] text-rock-cream">
+              {enrolled ? 'Your next session is ready.' : 'Begin training when you are ready.'}
+            </h2>
+            <p className="mt-3 text-sm leading-6 text-rock-muted">
+              Move through guided teaching, structured modules, and focused sessions that help you understand and apply Scripture.
+            </p>
+            <div className="mt-6">
+              {enrolled ? (
+                <button onClick={() => navigate(`/courses/${slug}/learn`)} className="armory-button-primary w-full">
+                  Continue your path
+                </button>
+              ) : (
+                <button onClick={handleEnroll} disabled={enrolling} className="armory-button-primary w-full disabled:opacity-50">
+                  {enrolling ? 'Beginning training…' : 'Begin training'}
+                </button>
+              )}
+              {enrollError && <p className="mt-3 text-sm text-rock-ember">{enrollError}</p>}
+            </div>
+          </aside>
         </div>
 
         <div className="mt-14 border-t border-rock-border pt-8">
-          <h2 className="font-display text-3xl">Syllabus</h2>
+          <h2 className="font-display text-display-3 tracking-[-0.03em] text-rock-cream">Path modules</h2>
 
           <ol className="mt-6 space-y-6">
             {modules.map((m, i) => (
-              <li key={m.id} className="rounded-2xl border border-rock-border bg-rock-panel p-5">
-                <p className="font-body text-xs font-bold uppercase tracking-wide text-rock-gold">
+              <li key={m.id} className="armory-card p-5">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-rock-goldlight">
                   Module {String(i + 1).padStart(2, '0')}
                 </p>
-                <h3 className="mt-1 font-display text-2xl">{m.title}</h3>
+                <h3 className="mt-2 font-display text-display-2 tracking-[-0.03em] text-rock-cream">{m.title}</h3>
                 <ul className="mt-3 space-y-1.5">
                   {m.lessons.map((lesson) => (
                     <li key={lesson.id} className="flex items-center gap-2 text-sm text-rock-muted">
-                      <span className="h-1.5 w-1.5 rounded-full bg-rock-gold/50" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-rock-kingdom/70" />
                       {lesson.title}
                     </li>
                   ))}

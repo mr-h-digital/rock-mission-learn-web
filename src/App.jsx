@@ -18,8 +18,11 @@ import ResetPassword from './pages/ResetPassword'
 export default function App() {
   return (
     <div className="min-h-screen">
+      <a href="#main-content" className="armory-skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Catalog />} />

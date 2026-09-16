@@ -77,19 +77,19 @@ export default function Settings() {
 
   return (
     <ThemedPage variant="settings">
-      <div className="mx-auto max-w-3xl px-6 py-16">
-        <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">Settings</p>
-        <h1 className="mt-2 font-display text-5xl">Your profile</h1>
-        <p className="mt-3 text-sm text-rock-muted">Keep your account details up to date.</p>
+      <div className="armory-shell py-16">
+        <p className="armory-eyebrow">Settings</p>
+        <h1 className="mt-3 font-display text-display-4 tracking-[-0.03em] text-rock-cream">Your profile</h1>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-rock-muted">Keep your account details secure, current, and ready for continued learning.</p>
 
-        <div className="mt-6 rounded-2xl border border-rock-border bg-rock-panel p-5">
-          <p className="text-xs uppercase tracking-wide text-rock-muted">Signed in as</p>
+        <div className="armory-card mt-6 p-5">
+          <p className="text-xs uppercase tracking-[0.18em] text-rock-muted">Signed in as</p>
           <p className="mt-2 text-sm text-rock-cream">{user?.displayName}</p>
           <p className="text-sm text-rock-muted">{user?.email}</p>
-          <p className="mt-2 text-xs uppercase tracking-wide text-rock-goldlight">Role: {roleLabel}</p>
+          <p className="mt-2 text-xs uppercase tracking-[0.18em] text-rock-goldlight">Role: {roleLabel}</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-5 rounded-2xl border border-rock-border bg-rock-panel p-6">
+        <form onSubmit={handleSubmit} className="armory-card mt-6 space-y-5 p-6">
           <FormField
             label="Display name"
             value={form.displayName}
@@ -108,7 +108,7 @@ export default function Settings() {
           />
 
           <div className="pt-2">
-            <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Change password (optional)</p>
+            <p className="armory-eyebrow">Change password</p>
           </div>
 
           <FormField
@@ -142,11 +142,7 @@ export default function Settings() {
           {error && <p className="text-sm text-rock-ember">{error}</p>}
           {success && <p className="text-sm text-rock-goldlight">{success}</p>}
 
-          <button
-            type="submit"
-            disabled={submitting}
-            className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90 disabled:opacity-60"
-          >
+          <button type="submit" disabled={submitting} className="armory-button-primary">
             {submitting ? 'Saving…' : 'Save changes'}
           </button>
         </form>

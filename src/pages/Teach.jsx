@@ -59,17 +59,20 @@ export default function Teach() {
 
   return (
     <ThemedPage variant="teach">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <div className="flex items-start justify-between gap-4">
+      <div className="armory-shell py-16">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">Educator</p>
-            <h1 className="mt-2 font-display text-5xl">Your courses</h1>
+            <p className="armory-eyebrow">Educator Studio</p>
+            <h1 className="mt-3 font-display text-display-4 tracking-[-0.03em] text-rock-cream">Your training paths</h1>
+            <p className="mt-4 max-w-2xl text-base leading-7 text-rock-muted">
+              Create, shape, and publish learning paths that guide people through Scripture with clarity and purpose.
+            </p>
           </div>
           <button
             onClick={() => setShowCreate((s) => !s)}
-            className="rounded-full bg-grad-gold px-5 py-3 text-xs font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity whitespace-nowrap"
+            className="armory-button-primary w-full px-5 py-3 text-xs sm:w-auto"
           >
-            {showCreate ? 'Cancel' : '+ New course'}
+            {showCreate ? 'Cancel' : '+ Create path'}
           </button>
         </div>
 
@@ -78,7 +81,7 @@ export default function Teach() {
         {showCreate && (
           <form
             onSubmit={handleCreate}
-            className="mt-8 space-y-4 rounded-2xl border border-rock-border bg-rock-panel p-6"
+            className="armory-card mt-8 space-y-4 p-6"
           >
             <FormField label="Title" value={form.title} onChange={handleTitleChange} required />
             <FormField
@@ -97,7 +100,7 @@ export default function Teach() {
                 value={form.description}
                 onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                 rows={3}
-                className="mt-1.5 w-full rounded-lg border border-rock-border bg-white/5 px-4 py-2.5 text-sm text-rock-cream outline-none placeholder:text-rock-muted/50 focus:border-rock-gold"
+                className="armory-input"
               />
             </label>
             <FormField
@@ -108,9 +111,9 @@ export default function Teach() {
             <button
               type="submit"
               disabled={creating}
-              className="rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity disabled:opacity-60"
+              className="armory-button-primary"
             >
-              {creating ? 'Creating…' : 'Create course (draft)'}
+              {creating ? 'Creating…' : 'Create path draft'}
             </button>
           </form>
         )}
@@ -119,11 +122,11 @@ export default function Teach() {
           {courses?.map((c) => (
             <div
               key={c.id}
-              className="flex items-center justify-between rounded-2xl border border-rock-border bg-rock-panel p-5"
+              className="armory-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
-                <div className="flex items-center gap-2.5">
-                  <h3 className="font-display text-xl">{c.title}</h3>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-2.5">
+                  <h3 className="font-display text-display-2 tracking-[-0.03em] text-rock-cream">{c.title}</h3>
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide ${
                       c.status === 'PUBLISHED' ? 'bg-rock-gold/15 text-rock-goldlight' : 'bg-white/10 text-rock-muted'
@@ -134,18 +137,18 @@ export default function Teach() {
                 </div>
                 <p className="mt-1 text-xs text-rock-muted">{c.enrolledCount} enrolled</p>
               </div>
-              <div className="flex items-center gap-2.5">
+              <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
                 {c.status === 'DRAFT' && (
                   <button
                     onClick={() => handlePublish(c.id)}
-                    className="rounded-full border-2 border-rock-ember px-4 py-2 text-xs font-bold uppercase tracking-wide text-rock-emberlight hover:bg-rock-ember/10 transition-colors"
+                    className="armory-button-secondary w-full px-4 py-2 text-xs text-rock-emberlight hover:border-rock-ember sm:w-auto"
                   >
                     Publish
                   </button>
                 )}
                 <Link
                   to={`/teach/${c.slug}`}
-                  className="rounded-full border-2 border-rock-gold px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-rock-gold/10 transition-colors"
+                  className="armory-button-secondary w-full px-4 py-2 text-xs sm:w-auto"
                 >
                   Manage
                 </Link>
@@ -154,7 +157,9 @@ export default function Teach() {
           ))}
 
           {courses && courses.length === 0 && !showCreate && (
-            <p className="text-sm text-rock-muted">You haven't created any courses yet.</p>
+            <div className="armory-card p-8 text-center">
+              <p className="text-sm text-rock-muted">You haven't created any training paths yet.</p>
+            </div>
           )}
         </div>
       </div>

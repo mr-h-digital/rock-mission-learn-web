@@ -24,33 +24,36 @@ export default function Dashboard() {
 
   return (
     <ThemedPage variant="dashboard">
-      <div className="mx-auto max-w-5xl px-6 py-16">
-        <p className="font-body text-xs font-bold uppercase tracking-[0.2em] text-rock-gold">
+      <div className="armory-shell py-16">
+        <p className="armory-eyebrow">
           Welcome back, {user?.displayName?.split(' ')[0]}
         </p>
-        <h1 className="mt-2 font-display text-5xl">Your learning path</h1>
+        <h1 className="mt-3 font-display text-display-4 tracking-[-0.03em] text-rock-cream">Your training</h1>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-rock-muted">
+          Continue building strong foundations through guided Scripture learning, steady progress, and purposeful next steps.
+        </p>
 
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <QuickActionCard
-            title="Keep learning"
-            description="Jump back into the catalog and keep your momentum going."
-            ctaLabel="Browse courses"
+            title="Explore training paths"
+            description="Browse guided studies that help you keep growing in Scripture."
+            ctaLabel="View paths"
             to="/courses"
           />
 
           {isEducator && (
             <QuickActionCard
-              title="Teach"
-              description="Manage your courses, publish content, and view learner progress."
-              ctaLabel="Open teach hub"
+              title="Educator Studio"
+              description="Manage paths, publish content, and support learner progress."
+              ctaLabel="Open studio"
               to="/teach"
             />
           )}
 
           {isAdmin && (
             <QuickActionCard
-              title="Admin"
-              description="Promote users, manage roles, and support your ministry team."
+              title="Platform administration"
+              description="Manage roles and support the wider ministry platform."
               ctaLabel="Open admin"
               to="/admin"
             />
@@ -59,41 +62,41 @@ export default function Dashboard() {
 
         {enrollments && enrollments.length > 0 && (
           <div className="mt-6 grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="rounded-2xl border border-rock-border bg-rock-panel p-5">
-              <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Continue where you left off</p>
+            <div className="armory-card p-6">
+              <p className="armory-eyebrow">Continue your path</p>
               {nextUp ? (
                 <>
-                  <h2 className="mt-2 font-display text-3xl">{nextUp.courseTitle}</h2>
-                  <p className="mt-2 text-sm text-rock-muted">Pick up your next lesson and keep your streak alive.</p>
+                  <h2 className="mt-3 font-display text-display-3 tracking-[-0.03em] text-rock-cream">{nextUp.courseTitle}</h2>
+                  <p className="mt-3 text-sm leading-6 text-rock-muted">Your next session is ready. Pick up where you left off and continue learning at a steady pace.</p>
                   <div className="mt-4">
                     <ProgressPath completed={nextUp.completedLessons} total={nextUp.totalLessons} />
                   </div>
                   <Link
                     to={`/courses/${nextUp.courseSlug}/learn`}
-                    className="mt-5 inline-block rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] transition-opacity hover:opacity-90"
+                    className="armory-button-primary mt-5"
                   >
-                    Continue now
+                    Continue training
                   </Link>
                 </>
               ) : (
                 <>
-                  <h2 className="mt-2 font-display text-3xl">All current courses complete</h2>
-                  <p className="mt-2 text-sm text-rock-muted">Great momentum. Start a new path to keep growing.</p>
+                  <h2 className="mt-3 font-display text-display-3 tracking-[-0.03em] text-rock-cream">Your current paths are complete</h2>
+                  <p className="mt-3 text-sm leading-6 text-rock-muted">You have finished your current learning. Explore another path to keep growing in Scripture.</p>
                   <Link
                     to="/courses"
-                    className="mt-5 inline-block rounded-full border-2 border-rock-gold px-6 py-3 text-xs font-bold uppercase tracking-wide transition-colors hover:bg-rock-gold/10"
+                    className="armory-button-secondary mt-5 text-xs"
                   >
-                    Start another course
+                    Start another path
                   </Link>
                 </>
               )}
             </div>
 
-            <div className="rounded-2xl border border-rock-border bg-rock-panel p-5">
-              <p className="text-xs font-bold uppercase tracking-wide text-rock-gold">Recent activity</p>
+            <div className="armory-card p-6">
+              <p className="armory-eyebrow">Recent activity</p>
               <ul className="mt-3 space-y-3">
                 {recentActivity.map((item, idx) => (
-                  <li key={`${item.title}-${idx}`} className="rounded-xl border border-white/10 bg-white/[0.02] px-3.5 py-2.5">
+                  <li key={`${item.title}-${idx}`} className="rounded-panel border border-white/10 bg-white/[0.02] px-3.5 py-2.5">
                     <p className="text-sm text-rock-cream">{item.title}</p>
                     <p className="mt-1 text-xs text-rock-muted">{item.meta}</p>
                   </li>
@@ -104,7 +107,7 @@ export default function Dashboard() {
         )}
 
         {enrollments && enrollments.length > 0 && (
-          <div className="mt-6 flex gap-8">
+          <div className="mt-6 grid gap-3 sm:inline-flex sm:gap-8">
             <StatChip num={enrollments.length} label="Enrolled" />
             <StatChip num={coursesCompleted} label="Completed" />
           </div>
@@ -113,13 +116,13 @@ export default function Dashboard() {
         {error && <p className="mt-8 text-sm text-rock-ember">{error}</p>}
 
         {enrollments && enrollments.length === 0 && (
-          <div className="mt-10 rounded-2xl border border-dashed border-rock-border p-10 text-center">
+          <div className="armory-card mt-10 border-dashed p-6 text-center sm:p-10">
             <p className="text-rock-muted">You haven't enrolled in a course yet.</p>
             <Link
               to="/courses"
-              className="mt-4 inline-block rounded-full bg-grad-gold px-6 py-3 text-sm font-extrabold uppercase tracking-wide text-[#0b1220] hover:opacity-90 transition-opacity"
+              className="armory-button-primary mt-4"
             >
-              Browse courses
+              Explore training paths
             </Link>
           </div>
         )}
@@ -129,23 +132,23 @@ export default function Dashboard() {
             {enrollments.map((e) => (
               <div
                 key={e.enrollmentId}
-                className="flex items-center justify-between rounded-2xl border border-rock-border bg-rock-panel p-6"
+                className="armory-card flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
-                  <h3 className="font-display text-2xl">{e.courseTitle}</h3>
+                  <h3 className="font-display text-display-2 tracking-[-0.03em] text-rock-cream">{e.courseTitle}</h3>
                   <div className="mt-2">
                     <ProgressPath completed={e.completedLessons} total={e.totalLessons} />
                   </div>
                 </div>
 
                 {e.status === 'COMPLETED' ? (
-                  <span className="rounded-full bg-rock-gold/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-rock-goldlight">
+                  <span className="rounded-full bg-rock-kingdom/15 px-4 py-2 text-xs font-bold uppercase tracking-[0.18em] text-rock-kingdom">
                     Completed
                   </span>
                 ) : (
                   <Link
                     to={`/courses/${e.courseSlug}/learn`}
-                    className="rounded-full border-2 border-rock-gold px-5 py-2.5 text-xs font-bold uppercase tracking-wide hover:bg-rock-gold/10 transition-colors"
+                    className="armory-button-secondary text-xs"
                   >
                     Continue
                   </Link>
@@ -161,21 +164,21 @@ export default function Dashboard() {
 
 function StatChip({ num, label }) {
   return (
-    <div>
+    <div className="rounded-panel border border-rock-border bg-black/10 px-4 py-4">
       <div className="font-display text-3xl leading-none text-rock-gold">{num}</div>
-      <div className="mt-1 text-[11px] uppercase tracking-wide text-rock-muted">{label}</div>
+      <div className="mt-2 text-[11px] uppercase tracking-[0.18em] text-rock-muted">{label}</div>
     </div>
   )
 }
 
 function QuickActionCard({ title, description, ctaLabel, to }) {
   return (
-    <div className="rounded-2xl border border-rock-border bg-rock-panel p-5">
-      <h2 className="font-display text-2xl">{title}</h2>
-      <p className="mt-2 text-sm text-rock-muted">{description}</p>
+    <div className="armory-card p-5">
+      <h2 className="font-display text-display-2 tracking-[-0.03em] text-rock-cream">{title}</h2>
+      <p className="mt-3 text-sm leading-6 text-rock-muted">{description}</p>
       <Link
         to={to}
-        className="mt-4 inline-block rounded-full border-2 border-rock-gold px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-rock-gold/10 transition-colors"
+        className="armory-button-secondary mt-4 text-xs"
       >
         {ctaLabel}
       </Link>
