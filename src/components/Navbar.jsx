@@ -20,16 +20,16 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-10 border-b border-rock-border bg-rock-bg/85 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <a
-          href="https://rockmission.co.za"
+        <Link
+          to="/"
           className="font-display text-xl leading-none tracking-wide sm:text-2xl"
-          rel="noopener noreferrer"
+          onClick={closeMenu}
         >
           ROCK<span className="text-rock-gold">MISSION</span>{' '}
           <span className="hidden align-middle font-body text-[10px] font-bold uppercase tracking-[0.2em] text-rock-muted sm:inline">
             Bible Study
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-6 font-body text-sm md:flex">
           <Link to="/" className="text-rock-muted hover:text-rock-gold transition-colors">
@@ -38,6 +38,14 @@ export default function Navbar() {
           <Link to="/courses" className="text-rock-muted hover:text-rock-gold transition-colors">
             Courses
           </Link>
+          <a
+            href="https://rockmission.co.za"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-rock-muted hover:text-rock-gold transition-colors"
+          >
+            Main site
+          </a>
 
           {user ? (
             <>
@@ -110,6 +118,15 @@ export default function Navbar() {
             <Link to="/courses" onClick={closeMenu} className="text-rock-muted hover:text-rock-gold transition-colors">
               Courses
             </Link>
+            <a
+              href="https://rockmission.co.za"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={closeMenu}
+              className="text-rock-muted hover:text-rock-gold transition-colors"
+            >
+              Main site
+            </a>
 
             {user ? (
               <>
